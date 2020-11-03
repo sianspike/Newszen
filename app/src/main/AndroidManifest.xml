@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppStyle">
         <activity
+            android:name=".SignUp"
+            android:label="Sign Up"></activity>
+        <activity
             android:name=".Login"
-            android:label="Login"></activity>
+            android:label="Login" />
         <activity
             android:name=".Splash"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">

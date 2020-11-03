@@ -13,7 +13,7 @@ class Topics : AppCompatActivity() {
 
     fun nextButtonClicked(view: View) {
 
-        val intent = Intent(this, Dashboard::class.java)
-        startActivity(intent)
+        val dashboard = Intent(this, Dashboard::class.java)
+        startActivity(dashboard)
     }
 }
