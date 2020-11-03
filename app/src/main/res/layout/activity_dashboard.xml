@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Dashboard">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewOne"
+        android:layout_width="155dp"
+        android:layout_height="282dp"
+        tools:layout_editor_absoluteX="26dp"
+        tools:layout_editor_absoluteY="105dp"
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:id="@+id/imageOneView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/stockimage" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/containerOne"
+                android:layout_width="155dp"
+                android:layout_height="90dp"
+                android:background="@color/primary_purple"
+                android:layout_alignParentBottom="true" />
+
+            <TextView
+                android:id="@+id/titleOneText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Title"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_alignTop="@+id/containerOne"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/publisherOneText"
+                android:layout_width="55dp"
+                android:layout_height="18dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Publisher"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_below="@+id/titleOneText"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/summaryOneText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Summary"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_below="@+id/publisherOneText"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+
+            <Button
+                android:id="@+id/downloadOneButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="100dp"
+                android:layout_height="38dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Download"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_alignBottom="@+id/containerOne"
+                android:layout_alignParentRight="true"/>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewTwo"
+        android:layout_width="155dp"
+        android:layout_height="282dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_toRightOf="@+id/cardViewOne"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/imageTwoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/stockimage" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/containerTwo"
+                android:layout_width="155dp"
+                android:layout_height="93dp"
+                android:background="@color/primary_purple"
+                android:layout_alignParentBottom="true" />
+
+            <TextView
+                android:id="@+id/titleTwoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Title"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_alignTop="@+id/containerTwo"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/publisherTwoText"
+                android:layout_width="55dp"
+                android:layout_height="18dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Publisher"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_below="@+id/titleTwoText"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/summaryTwoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Summary"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_below="@+id/publisherTwoText"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+
+            <Button
+                android:id="@+id/downloadTwoButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="100dp"
+                android:layout_height="38dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Download"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_alignBottom="@+id/containerTwo"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewThree"
+        android:layout_width="156dp"
+        android:layout_height="281dp"
+        android:layout_below="@+id/cardViewOne"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/imageThreeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/stockimage" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/containerThree"
+                android:layout_width="156dp"
+                android:layout_height="93dp"
+                android:background="@color/primary_purple"
+                android:layout_alignParentBottom="true" />
+
+            <TextView
+                android:id="@+id/titleThreeText"
+                android:layout_width="43dp"
+                android:layout_height="19dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Title"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_alignTop="@+id/containerThree"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/publisherThreeText"
+                android:layout_width="55dp"
+                android:layout_height="18dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Publisher"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_below="@+id/titleThreeText"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/summaryThreeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Summary"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_below="@+id/publisherThreeText"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+
+            <Button
+                android:id="@+id/downloadThreeButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="100dp"
+                android:layout_height="38dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Download"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_alignBottom="@+id/containerThree"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewFour"
+        android:layout_width="156dp"
+        android:layout_height="281dp"
+        android:layout_below="@+id/cardViewTwo"
+        android:layout_toRightOf="@+id/cardViewThree"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:id="@+id/imageFourView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/stockimage"
+            tools:layout_editor_absoluteX="88dp"
+            tools:layout_editor_absoluteY="317dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/containerFour"
+                android:layout_width="156dp"
+                android:layout_height="93dp"
+                android:background="@color/primary_purple"
+                android:layout_alignParentBottom="true" />
+
+            <TextView
+                android:id="@+id/titleFourText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Title"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_alignTop="@+id/containerFour"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/publisherFourText"
+                android:layout_width="55dp"
+                android:layout_height="18dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Publisher"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_below="@+id/titleFourText"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/summaryFourText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Summary"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_below="@+id/publisherFourText"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+
+            <Button
+                android:id="@+id/downloadFourButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="100dp"
+                android:layout_height="38dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Download"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_alignBottom="@+id/containerFour"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
