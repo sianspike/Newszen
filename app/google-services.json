@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "672491658946",
+    "firebase_url": "https://newszen-962fe.firebaseio.com",
+    "project_id": "newszen-962fe",
+    "storage_bucket": "newszen-962fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672491658946:android:7544f6973a7e657295e55b",
+        "android_client_info": {
+          "package_name": "com.sianpike.newszen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672491658946-8locpavj81lmm07lf13rtorekmpf2br8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVExIulfRMy2vHAqOiNRDCM_c1lNKKhZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672491658946-8locpavj81lmm07lf13rtorekmpf2br8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
