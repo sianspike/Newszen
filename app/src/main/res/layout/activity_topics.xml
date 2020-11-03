@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Theme.MaterialComponents.Light.DarkActionBar"
     android:layout_width="match_parent"
@@ -14,26 +13,26 @@
         android:layout_height="wrap_content"
         android:text="@string/technology"
         android:layout_marginTop="200dp"
-        android:layout_marginLeft="60dp"/>
+        android:layout_marginStart="60dp"/>
 
     <Button
         android:id="@+id/healthButton"
         style="@style/ClickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Health"
-        android:layout_toRightOf="@+id/technologyButton"
+        android:text="@string/health"
+        android:layout_toEndOf="@+id/technologyButton"
         android:layout_marginTop="200dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginStart="20dp"/>
 
     <Button
         android:id="@+id/businessButton"
         style="@style/UnclickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Business"
+        android:text="@string/business"
         android:layout_below="@+id/technologyButton"
-        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"/>
 
     <Button
@@ -41,52 +40,52 @@
         style="@style/ClickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fitness"
-        android:layout_toRightOf="@+id/businessButton"
+        android:text="@string/fitness"
+        android:layout_toEndOf="@+id/businessButton"
         android:layout_below="@+id/technologyButton"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginStart="20dp"/>
 
     <Button
         android:id="@+id/moneyButton"
         style="@style/UnclickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Money"
-        android:layout_toRightOf="@id/fitnessButton"
+        android:text="@string/money"
+        android:layout_toEndOf="@id/fitnessButton"
         android:layout_below="@+id/healthButton"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginStart="20dp"/>
 
     <Button
         android:id="@+id/politicsButton"
         style="@style/UnclickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Politics"
+        android:text="@string/politics"
         android:layout_below="@+id/businessButton"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="80dp"/>
+        android:layout_marginStart="80dp"/>
 
     <Button
         android:id="@+id/celebrityButton"
         style="@style/UnclickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Celebrity"
-        android:layout_toRightOf="@id/politicsButton"
+        android:text="@string/celebrity"
+        android:layout_toEndOf="@id/politicsButton"
         android:layout_below="@id/fitnessButton"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginStart="20dp"/>
 
     <Button
         android:id="@+id/tvButton"
         style="@style/UnclickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TV"
+        android:text="@string/tv"
         android:layout_below="@id/politicsButton"
-        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"/>
 
     <Button
@@ -94,22 +93,22 @@
         style="@style/UnclickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Science"
-        android:layout_toRightOf="@id/tvButton"
+        android:text="@string/science"
+        android:layout_toEndOf="@id/tvButton"
         android:layout_below="@id/politicsButton"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginStart="20dp"/>
 
     <Button
         android:id="@+id/musicButton"
         style="@style/ClickedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Music"
-        android:layout_toRightOf="@id/scienceButton"
+        android:text="@string/music"
+        android:layout_toEndOf="@id/scienceButton"
         android:layout_below="@id/celebrityButton"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginStart="20dp"/>
 
     <ImageButton
         android:id="@+id/nextButton"
@@ -120,6 +119,7 @@
         android:src="@drawable/arrow"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="50dp"
+        android:contentDescription="@string/continue_to_dashboard" />
 
 </RelativeLayout>

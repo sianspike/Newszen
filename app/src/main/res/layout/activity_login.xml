@@ -1,9 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Login">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/emailField"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="21sp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="220dp"
+        android:backgroundTint="@color/secondary_green"
+        android:inputType="textEmailAddress"
+        android:autofillHints="@string/prompt_email"/>
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/passwordField"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="21sp"
+        android:textAlignment="center"
+        android:backgroundTint="@color/secondary_green"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/emailField"
+        android:layout_marginTop="70dp"
+        android:autofillHints="@string/prompt_password"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginButton"
+        android:text="@string/login"
+        android:backgroundTint="@color/secondary_green"
+        android:textColor="@color/black"
+        android:layout_below="@+id/passwordField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:id="@+id/signUpButton"
+        android:text="@string/sign_up"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
