@@ -7,6 +7,9 @@ import android.view.Menu
 import androidx.appcompat.widget.Toolbar
 
 class Dashboard : AppCompatActivity() {
+
+    private lateinit var topics: List<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -14,11 +17,18 @@ class Dashboard : AppCompatActivity() {
         //Put menu icon to the left of the toolbar
         getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.menu);// set drawable icon
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
+
+        topics = (intent.getStringArrayExtra("topics") as Array<String>).toList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
 
         return true
+    }
+
+    fun retrieveNews() {
+
+        
     }
 }
