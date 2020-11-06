@@ -14,17 +14,7 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="UnclickedButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:backgroundTint">@color/secondary_green</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:topLeftRadius">10dp</item>
-        <item name="android:topRightRadius">10dp</item>
-        <item name="android:bottomLeftRadius">10dp</item>
-        <item name="android:bottomRightRadius">10dp</item>
-    </style>
-
-    <style name="ClickedButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:backgroundTint">@color/variant_green</item>
+    <style name="Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/black</item>
         <item name="android:topLeftRadius">10dp</item>
         <item name="android:topRightRadius">10dp</item>
