@@ -1,14 +1,24 @@
 package com.sianpike.newszen
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.RelativeLayout.LayoutParams
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.core.view.marginTop
 import com.beust.klaxon.Klaxon
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 import okhttp3.*
 import okio.IOException
+import java.io.InputStream
+import java.net.URL
 
 
 class Dashboard : AppCompatActivity() {
@@ -45,6 +55,42 @@ class Dashboard : AppCompatActivity() {
         return true
     }
 
+    fun loadImageFromURL(url: String?): Drawable? {
+
+        return try {
+
+            val inputStream: InputStream = URL(url).getContent() as InputStream
+
+            Drawable.createFromStream(inputStream, "image")
+
+        } catch (e: Exception) {
+
+            null
+        }
+    }
+
+    fun populateCards() {
+
+        var imageViewOne = findViewById<ImageView>(R.id.imageOneView)
+        var titleTextOne = findViewById<TextView>(R.id.titleOneText)
+        var publisherTextOne = findViewById<TextView>(R.id.publisherOneText)
+        var summaryTextOne = findViewById<TextView>(R.id.summaryOneText)
+        var cardContainer = findViewById<RelativeLayout>(R.id.dashboardCardContainer)
+
+        Picasso.get().load(articles[0].urlToImage).into(imageViewOne)
+        titleTextOne.text = articles[0].title
+        publisherTextOne.text = articles[0].source.name
+        summaryTextOne.text = articles[0].description
+
+        for (article in articles) {
+
+            var card = CardView(this)
+            val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 282)
+            card.layoutParams = layoutParams
+            cardContainer.addView(card)
+        }
+    }
+
     private fun retrieveNews() {
 
         for (topic in topics) {
@@ -71,7 +117,19 @@ class Dashboard : AppCompatActivity() {
                         }
 
                         val result = Klaxon().parse<APIResult>(response.body!!.string())
-                        articles = result!!.articles
+                        articles += result!!.articles
+
+                        // Run view-related code back on the main thread
+                        this@Dashboard.runOnUiThread {
+
+                            try {
+
+                                populateCards()
+
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+                        }
                     }
                 }
             })
