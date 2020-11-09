@@ -9,8 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.ArrayList
 
 class Login : AppCompatActivity() {
 
@@ -54,17 +58,18 @@ class Login : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(tag, "signInWithEmail:success")
-                    val user = mAuth.currentUser
+                    val user = mAuth.currentUser!!
+                    dashboard.putExtra("userUID", user.uid.toString())
                     startActivity(dashboard)
-                    //updateUI(user)
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(tag, "signInWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
-                    //updateUI(null)
                 }
             }
     }
