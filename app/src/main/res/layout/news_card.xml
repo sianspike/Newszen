@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="282dp"
@@ -7,10 +8,12 @@
     android:layout_margin="20dp"
     tools:layout_editor_absoluteX="26dp"
     tools:layout_editor_absoluteY="105dp"
-    android:elevation="8dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:elevation="3dp"
+    android:padding="4dp"
+    android:foreground="?selectableItemBackground"
+    android:clickable="true">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +30,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/primary_purple" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/titleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +43,7 @@
             android:maxLines="1"
             android:ellipsize="end"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/publisherText"
             android:layout_width="match_parent"
             android:layout_height="18dp"
@@ -52,7 +55,7 @@
             android:textSize="12sp"
             android:maxLines="1" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/summaryText"
             android:layout_width="250dp"
             android:layout_height="50dp"
@@ -66,7 +69,7 @@
             android:maxLines="2"
             android:ellipsize="end"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/downloadButton"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="100dp"

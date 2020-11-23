@@ -1,9 +1,11 @@
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.sianpike.newszen.FullStory
 import com.sianpike.newszen.NewsArticle
 import com.sianpike.newszen.R
 import com.squareup.picasso.Picasso
@@ -24,6 +26,19 @@ class DashboardAdapter(var articles: List<NewsArticle>) : RecyclerView.Adapter<D
             itemTitle = itemView.findViewById(R.id.titleText)
             itemPublisher = itemView.findViewById(R.id.publisherText)
             itemSummary = itemView.findViewById(R.id.summaryText)
+
+            itemView.setOnClickListener { v: View  ->
+
+                var position: Int = adapterPosition
+
+                val expandStory = Intent(v.context, FullStory::class.java)
+                expandStory.putExtra("title", articles[position].title)
+                expandStory.putExtra("publisher", articles[position].author)
+                expandStory.putExtra("content", articles[position].content)
+                expandStory.putExtra("image", articles[position].urlToImage)
+                expandStory.putExtra("url", articles[position].url)
+                v.context.startActivity(expandStory)
+            }
         }
     }
 
