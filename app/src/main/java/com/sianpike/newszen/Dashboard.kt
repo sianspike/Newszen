@@ -1,24 +1,17 @@
 package com.sianpike.newszen
 
-import android.graphics.drawable.Drawable
+import DashboardAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.RelativeLayout.LayoutParams
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.core.view.marginTop
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.beust.klaxon.Klaxon
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.squareup.picasso.Picasso
 import okhttp3.*
 import okio.IOException
-import java.io.InputStream
-import java.net.URL
 
 
 class Dashboard : AppCompatActivity() {
@@ -27,7 +20,10 @@ class Dashboard : AppCompatActivity() {
     private var tag = "Dashboard"
     private val client = OkHttpClient()
     private val db = Firebase.firestore
-    private var articles = listOf<NewsArticle>()
+    var articles = listOf<NewsArticle>()
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<DashboardAdapter.ViewHolder>? = null
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,48 +43,20 @@ class Dashboard : AppCompatActivity() {
 
             retrieveTopics(intent.getStringExtra("userUID")!!)
         }
+
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+
+        layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+
+        adapter = DashboardAdapter(articles)
+        recyclerView.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         menuInflater.inflate(R.menu.options_menu, menu)
         return true
-    }
-
-    fun loadImageFromURL(url: String?): Drawable? {
-
-        return try {
-
-            val inputStream: InputStream = URL(url).getContent() as InputStream
-
-            Drawable.createFromStream(inputStream, "image")
-
-        } catch (e: Exception) {
-
-            null
-        }
-    }
-
-    fun populateCards() {
-
-        var imageViewOne = findViewById<ImageView>(R.id.imageOneView)
-        var titleTextOne = findViewById<TextView>(R.id.titleOneText)
-        var publisherTextOne = findViewById<TextView>(R.id.publisherOneText)
-        var summaryTextOne = findViewById<TextView>(R.id.summaryOneText)
-        var cardContainer = findViewById<RelativeLayout>(R.id.dashboardCardContainer)
-
-        Picasso.get().load(articles[0].urlToImage).into(imageViewOne)
-        titleTextOne.text = articles[0].title
-        publisherTextOne.text = articles[0].source.name
-        summaryTextOne.text = articles[0].description
-
-        for (article in articles) {
-
-            var card = CardView(this)
-            val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 282)
-            card.layoutParams = layoutParams
-            cardContainer.addView(card)
-        }
     }
 
     private fun retrieveNews() {
@@ -124,7 +92,10 @@ class Dashboard : AppCompatActivity() {
 
                             try {
 
-                                populateCards()
+                                recyclerView.layoutManager = layoutManager
+
+                                adapter = DashboardAdapter(articles)
+                                recyclerView.adapter = adapter
 
                             } catch (e: IOException) {
                                 e.printStackTrace()

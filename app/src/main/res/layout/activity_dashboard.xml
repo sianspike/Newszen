@@ -1,95 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Dashboard"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/dashboardScrollView">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/dashboardCardContainer">
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"
+        android:scrollbars="vertical"/>
+</RelativeLayout>
+<!--<ScrollView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".Dashboard"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/dashboardScrollView">-->
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewOne"
-            android:layout_width="match_parent"
-            android:layout_height="282dp"
-            android:layout_alignParentStart="true"
-            android:layout_margin="20dp"
-            tools:layout_editor_absoluteX="26dp"
-            tools:layout_editor_absoluteY="105dp"
-            android:elevation="8dp">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/dashboardCardContainer">-->
 
-            <ImageView
-                android:id="@+id/imageOneView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/stockimage" />
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/cardViewOne"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="282dp"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_margin="20dp"-->
+<!--            tools:layout_editor_absoluteX="26dp"-->
+<!--            tools:layout_editor_absoluteY="105dp"-->
+<!--            android:elevation="8dp">-->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<!--            <ImageView-->
+<!--                android:id="@+id/imageOneView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:src="@drawable/stockimage" />-->
 
-                <View
-                    android:id="@+id/containerOne"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/primary_purple" />
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
 
-                <TextView
-                    android:id="@+id/titleOneText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/containerOne"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="@string/title"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"/>
+<!--                <View-->
+<!--                    android:id="@+id/containerOne"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="90dp"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:background="@color/primary_purple" />-->
 
-                <TextView
-                    android:id="@+id/publisherOneText"
-                    android:layout_width="match_parent"
-                    android:layout_height="18dp"
-                    android:layout_below="@+id/titleOneText"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/publisher"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:maxLines="1" />
+<!--                <TextView-->
+<!--                    android:id="@+id/titleOneText"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignTop="@+id/containerOne"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:fontFamily="@font/roboto_medium"-->
+<!--                    android:text="@string/title"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:ellipsize="end"/>-->
 
-                <TextView
-                    android:id="@+id/summaryOneText"
-                    android:layout_width="250dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/publisherOneText"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/summary"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:maxLines="2"
-                    android:ellipsize="end"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/publisherOneText"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="18dp"-->
+<!--                    android:layout_below="@+id/titleOneText"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:fontFamily="@font/roboto_regular"-->
+<!--                    android:text="@string/publisher"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:maxLines="1" />-->
 
-                <Button
-                    android:id="@+id/downloadOneButton"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="100dp"
-                    android:layout_height="38dp"
-                    android:layout_alignBottom="@+id/containerOne"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="@string/download"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
-</ScrollView>
+<!--                <TextView-->
+<!--                    android:id="@+id/summaryOneText"-->
+<!--                    android:layout_width="250dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_below="@+id/publisherOneText"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:fontFamily="@font/roboto_regular"-->
+<!--                    android:text="@string/summary"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:maxLines="2"-->
+<!--                    android:ellipsize="end"/>-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/downloadOneButton"-->
+<!--                    style="@style/Widget.AppCompat.Button.Borderless"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="38dp"-->
+<!--                    android:layout_alignBottom="@+id/containerOne"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:fontFamily="@font/roboto_bold"-->
+<!--                    android:text="@string/download"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="12sp" />-->
+<!--            </RelativeLayout>-->
+<!--        </androidx.cardview.widget.CardView>-->
+<!--    </RelativeLayout>-->
+<!--</ScrollView>-->
