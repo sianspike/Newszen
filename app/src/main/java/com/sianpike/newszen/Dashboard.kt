@@ -2,18 +2,18 @@ package com.sianpike.newszen
 
 import DashboardAdapter
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuItemCompat
+import androidx.core.view.MenuItemCompat.*
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.beust.klaxon.Klaxon
@@ -35,6 +35,7 @@ class Dashboard : AppCompatActivity() {
     private var adapter: RecyclerView.Adapter<DashboardAdapter.ViewHolder>? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +86,7 @@ class Dashboard : AppCompatActivity() {
             adapter!!.notifyDataSetChanged()
             var toast = Toast.makeText(applicationContext, "Refreshing...", Toast.LENGTH_SHORT)
             toast.show()
+
         }
 
         return true
@@ -94,7 +96,22 @@ class Dashboard : AppCompatActivity() {
 
         menuInflater.inflate(R.menu.options_menu, menu)
 
-        return true
+        val searchItem: MenuItem = menu.findItem(R.id.search)
+        val searchView: SearchView = MenuItemCompat.getActionView(searchItem) as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                (adapter as DashboardAdapter).filter.filter(newText)
+                return false
+            }
+
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     fun nearYouButtonClicked(view: View) {
@@ -162,8 +179,10 @@ class Dashboard : AppCompatActivity() {
 
                                 adapter = DashboardAdapter(articles)
                                 recyclerView.adapter = adapter
+                                (adapter as DashboardAdapter).filter.filter("")
 
                             } catch (e: IOException) {
+
                                 e.printStackTrace()
                             }
                         }

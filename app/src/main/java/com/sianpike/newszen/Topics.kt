@@ -22,7 +22,7 @@ class Topics : AppCompatActivity() {
     private lateinit var scienceButton: Button
     private lateinit var sportsButton: Button
     private lateinit var technologyButton: Button
-    private lateinit var topics: List<String>
+    private var topics = arrayOf<String>()
     private val tag = "Topics"
     private lateinit var buttons: Array<Button>
 
@@ -41,7 +41,7 @@ class Topics : AppCompatActivity() {
 
         if (intent.getStringArrayExtra("topics") != null) {
 
-            topics = (intent.getStringArrayExtra("topics") as Array<String>).toList()
+            topics = (intent.getStringArrayExtra("topics") as Array<String>)
         }
 
         businessButton = findViewById<Button>(R.id.businessButton)
