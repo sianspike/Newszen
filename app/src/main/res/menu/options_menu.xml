@@ -8,4 +8,9 @@
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.widget.SearchView"
         android:title="Search" />
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/refresh"
+        app:showAsAction="collapseActionView|ifRoom"
+        android:title="Refresh"/>
 </menu>

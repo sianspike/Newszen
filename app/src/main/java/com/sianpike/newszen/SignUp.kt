@@ -63,6 +63,8 @@ class SignUp : AppCompatActivity() {
 
                         topics.putExtra("userUID", user!!.uid)
                         startActivity(topics)
+                        finish()
+
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(tag, "createUserWithEmail:failure", task.exception)
@@ -73,5 +75,11 @@ class SignUp : AppCompatActivity() {
                         //updateUI(null)
                     }
                 }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        moveTaskToBack(true)
     }
 }

@@ -31,7 +31,7 @@ class Login : AppCompatActivity() {
 
 //        val dashboard = Intent(this, Dashboard::class.java)
 //        // Check if user is signed in (non-null) and update UI accordingly.
-//        val currentUser = auth.currentUser
+//        val currentUser = mAuth.currentUser
 //
 //        if (currentUser != null) {
 //
@@ -64,6 +64,7 @@ class Login : AppCompatActivity() {
                     val user = mAuth.currentUser!!
                     dashboard.putExtra("userUID", user.uid.toString())
                     startActivity(dashboard)
+                    finish()
 
                 } else {
                     // If sign in fails, display a message to the user.
@@ -72,5 +73,11 @@ class Login : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        moveTaskToBack(true)
     }
 }

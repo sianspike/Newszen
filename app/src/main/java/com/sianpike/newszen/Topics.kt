@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,13 +22,27 @@ class Topics : AppCompatActivity() {
     private lateinit var scienceButton: Button
     private lateinit var sportsButton: Button
     private lateinit var technologyButton: Button
+    private lateinit var topics: List<String>
     private val tag = "Topics"
+    private lateinit var buttons: Array<Button>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
 
-        userUID = intent.getStringExtra("userUID").toString()
+        if (intent.getStringExtra("userUID") != null) {
+
+            userUID = intent.getStringExtra("userUID").toString()
+
+        } else {
+
+            userUID = FirebaseAuth.getInstance().currentUser?.uid!!
+        }
+
+        if (intent.getStringArrayExtra("topics") != null) {
+
+            topics = (intent.getStringArrayExtra("topics") as Array<String>).toList()
+        }
 
         businessButton = findViewById<Button>(R.id.businessButton)
         entertainmentButton = findViewById<Button>(R.id.entertainmentButton)
@@ -36,12 +51,23 @@ class Topics : AppCompatActivity() {
         scienceButton = findViewById<Button>(R.id.scienceButton)
         sportsButton = findViewById<Button>(R.id.sportsButton)
         technologyButton = findViewById<Button>(R.id.technologyButton)
+
+        buttons = arrayOf<Button>(businessButton, entertainmentButton, generalButton,
+                healthButton, scienceButton, sportsButton, technologyButton)
+
+        for (button in buttons) {
+
+            if (topics.contains(button.text.toString())) {
+
+                button.isSelected = button.isSelected == false
+            }
+        }
     }
 
-    private fun saveTopics(topics: Array<String>) {
+    private fun saveTopics(newTopics: Array<String>) {
 
         val data = hashMapOf(
-            "topics" to topics.toList()
+            "topics" to newTopics.toList()
         )
 
         db.collection("users").document(userUID!!).set(data, SetOptions.merge())
@@ -65,22 +91,20 @@ class Topics : AppCompatActivity() {
 
     fun nextButtonClicked(view: View) {
 
-        var topics: Array<String> = emptyArray()
-        var buttons = arrayOf<Button>(businessButton, entertainmentButton, generalButton,
-            healthButton, scienceButton, sportsButton, technologyButton)
+        var newTopics: Array<String> = emptyArray()
 
         for (button in buttons) {
 
             if (button.isSelected) {
 
-                topics = appendArray(topics, button.text.toString())
+                newTopics = appendArray(newTopics, button.text.toString())
             }
         }
 
-        saveTopics(topics)
+        saveTopics(newTopics)
 
         val dashboard = Intent(this, Dashboard::class.java)
-        dashboard.putExtra("topics", topics)
+        dashboard.putExtra("topics", newTopics)
         startActivity(dashboard)
     }
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Topics">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         style="@style/Button"
         android:id="@+id/technologyButton"
         android:state_selected="false"
@@ -18,7 +18,7 @@
         android:onClick="technologyButtonClicked"
         android:text="@string/technology" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/healthButton"
         style="@style/Button"
         android:state_selected="false"
@@ -31,7 +31,7 @@
         android:onClick="healthButtonClicked"
         android:text="@string/health" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/businessButton"
         style="@style/Button"
         android:state_selected="false"
@@ -44,7 +44,7 @@
         android:layout_marginTop="10dp"
         android:onClick="businessButtonClicked"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/scienceButton"
         style="@style/Button"
         android:state_selected="false"
@@ -57,7 +57,7 @@
         android:layout_marginTop="10dp"
         android:onClick="scienceButtonClicked"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/entertainmentButton"
         style="@style/Button"
         android:state_selected="false"
@@ -71,7 +71,7 @@
         android:layout_marginStart="20dp"
         android:onClick="entertainmentButtonClicked"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/generalButton"
         style="@style/Button"
         android:state_selected="false"
@@ -85,7 +85,7 @@
         android:layout_marginStart="20dp"
         android:onClick="generalButtonClicked"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/sportsButton"
         style="@style/Button"
         android:state_selected="false"

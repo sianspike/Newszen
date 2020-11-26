@@ -1,13 +1,23 @@
 package com.sianpike.newszen
 
 import DashboardAdapter
+import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.beust.klaxon.Klaxon
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import okhttp3.*
@@ -24,14 +34,17 @@ class Dashboard : AppCompatActivity() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<DashboardAdapter.ViewHolder>? = null
     private lateinit var recyclerView: RecyclerView
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        drawerLayout = findViewById(R.id.drawerLayout)
+
         //Put menu icon to the left of the toolbar
-        getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.menu);// set drawable icon
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.menu);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
 
         if (intent.getStringArrayExtra("topics") != null) {
 
@@ -45,18 +58,71 @@ class Dashboard : AppCompatActivity() {
         }
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-
         layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-
         adapter = DashboardAdapter(articles)
         recyclerView.adapter = adapter
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == android.R.id.home) {
+
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+
+                drawerLayout.closeDrawer(GravityCompat.START)
+                supportActionBar?.setHomeAsUpIndicator(R.drawable.menu)
+
+            } else {
+
+                drawerLayout.openDrawer(GravityCompat.START)
+                supportActionBar?.setHomeAsUpIndicator(R.drawable.close)
+            }
+
+        } else if (item.itemId == R.id.refresh) {
+
+            retrieveNews()
+            adapter!!.notifyDataSetChanged()
+            var toast = Toast.makeText(applicationContext, "Refreshing...", Toast.LENGTH_SHORT)
+            toast.show()
+        }
+
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         menuInflater.inflate(R.menu.options_menu, menu)
+
         return true
+    }
+
+    fun nearYouButtonClicked(view: View) {
+
+
+    }
+
+    fun topicsButtonClicked(view: View) {
+
+        val topicsIntent = Intent(this, Topics::class.java)
+        topicsIntent.putExtra("topics", topics.toTypedArray())
+        startActivity(topicsIntent)
+    }
+
+    fun downloadedButtonClicked(view: View) {
+
+    }
+
+    fun notificationsButtonClicked(view: View) {
+
+    }
+
+    fun logoutButtonClicked(view: View) {
+
+        Firebase.auth.signOut()
+        val login = Intent(this, Login::class.java)
+        startActivity(login)
+        finish()
     }
 
     private fun retrieveNews() {
