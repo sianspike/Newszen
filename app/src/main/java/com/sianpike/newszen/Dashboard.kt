@@ -24,28 +24,20 @@ import okhttp3.*
 import okio.IOException
 
 
-class Dashboard : AppCompatActivity() {
+class Dashboard : Drawer() {
 
-    private lateinit var topics: List<String>
     private var tag = "Dashboard"
     private val client = OkHttpClient()
     private val db = Firebase.firestore
     var articles = listOf<NewsArticle>()
+
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<DashboardAdapter.ViewHolder>? = null
     private lateinit var recyclerView: RecyclerView
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-
-        drawerLayout = findViewById(R.id.drawerLayout)
-
-        //Put menu icon to the left of the toolbar
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.menu);
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
 
         if (intent.getStringArrayExtra("topics") != null) {
 
@@ -58,7 +50,7 @@ class Dashboard : AppCompatActivity() {
             retrieveTopics(intent.getStringExtra("userUID")!!)
         }
 
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView = findViewById(R.id.recyclerView)
         layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         adapter = DashboardAdapter(articles)
@@ -67,20 +59,9 @@ class Dashboard : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        if (item.itemId == android.R.id.home) {
+        super.onOptionsItemSelected(item)
 
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-
-                drawerLayout.closeDrawer(GravityCompat.START)
-                supportActionBar?.setHomeAsUpIndicator(R.drawable.menu)
-
-            } else {
-
-                drawerLayout.openDrawer(GravityCompat.START)
-                supportActionBar?.setHomeAsUpIndicator(R.drawable.close)
-            }
-
-        } else if (item.itemId == R.id.refresh) {
+        if (item.itemId == R.id.refresh) {
 
             retrieveNews()
             adapter!!.notifyDataSetChanged()
@@ -112,34 +93,6 @@ class Dashboard : AppCompatActivity() {
         })
 
         return super.onCreateOptionsMenu(menu)
-    }
-
-    fun nearYouButtonClicked(view: View) {
-
-
-    }
-
-    fun topicsButtonClicked(view: View) {
-
-        val topicsIntent = Intent(this, Topics::class.java)
-        topicsIntent.putExtra("topics", topics.toTypedArray())
-        startActivity(topicsIntent)
-    }
-
-    fun downloadedButtonClicked(view: View) {
-
-    }
-
-    fun notificationsButtonClicked(view: View) {
-
-    }
-
-    fun logoutButtonClicked(view: View) {
-
-        Firebase.auth.signOut()
-        val login = Intent(this, Login::class.java)
-        startActivity(login)
-        finish()
     }
 
     private fun retrieveNews() {
@@ -192,7 +145,7 @@ class Dashboard : AppCompatActivity() {
         }
     }
 
-    private fun retrieveTopics(user: String) {
+    fun retrieveTopics(user: String) {
 
         val currentUser = db.collection("users")
             .document("$user")

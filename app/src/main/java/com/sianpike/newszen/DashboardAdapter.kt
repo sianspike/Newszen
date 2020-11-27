@@ -84,7 +84,9 @@ class DashboardAdapter(var articles: List<NewsArticle>) :
 
                     for (row in articles as ArrayList<NewsArticle>) {
 
-                        if (row.title?.toLowerCase(Locale.ROOT)?.contains(charSearch.toLowerCase(Locale.ROOT)) == true) {
+                        if (row.title?.toLowerCase(Locale.ROOT)?.contains(charSearch.toLowerCase(Locale.ROOT)) == true ||
+                                row.author?.toLowerCase(Locale.ROOT)?.contains(charSearch.toLowerCase(Locale.ROOT)) == true ||
+                                row.source.name?.toLowerCase(Locale.ROOT)?.contains(charSearch.toLowerCase(Locale.ROOT)) == true) {
 
                             resultList.add(row)
                         }

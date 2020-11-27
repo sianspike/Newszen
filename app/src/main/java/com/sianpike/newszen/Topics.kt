@@ -42,6 +42,7 @@ class Topics : AppCompatActivity() {
         if (intent.getStringArrayExtra("topics") != null) {
 
             topics = (intent.getStringArrayExtra("topics") as Array<String>)
+
         }
 
         businessButton = findViewById<Button>(R.id.businessButton)
