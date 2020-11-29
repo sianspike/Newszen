@@ -1,23 +1,18 @@
 package com.sianpike.newszen
 
-import DashboardAdapter
-import android.content.Intent
+import NewsAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuItemCompat.*
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.beust.klaxon.Klaxon
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import okhttp3.*
@@ -29,10 +24,9 @@ class Dashboard : Drawer() {
     private var tag = "Dashboard"
     private val client = OkHttpClient()
     private val db = Firebase.firestore
-    var articles = listOf<NewsArticle>()
 
     private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<DashboardAdapter.ViewHolder>? = null
+
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +47,7 @@ class Dashboard : Drawer() {
         recyclerView = findViewById(R.id.recyclerView)
         layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        adapter = DashboardAdapter(articles)
+        adapter = NewsAdapter(articles)
         recyclerView.adapter = adapter
     }
 
@@ -73,34 +67,12 @@ class Dashboard : Drawer() {
         return true
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
-        menuInflater.inflate(R.menu.options_menu, menu)
-
-        val searchItem: MenuItem = menu.findItem(R.id.search)
-        val searchView: SearchView = MenuItemCompat.getActionView(searchItem) as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                (adapter as DashboardAdapter).filter.filter(newText)
-                return false
-            }
-
-        })
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
     private fun retrieveNews() {
 
         for (topic in topics) {
 
             val request = Request.Builder()
-                    .url("https://newsapi.org/v2/top-headlines?country=gb&category=$topic")
+                    .url("https://newsapi.org/v2/top-headlines?category=$topic")
                     .addHeader("x-api-key", "9952d1b8355247aba2d7dc3d260baec0")
                     .build()
 
@@ -130,9 +102,9 @@ class Dashboard : Drawer() {
 
                                 recyclerView.layoutManager = layoutManager
 
-                                adapter = DashboardAdapter(articles)
+                                adapter = NewsAdapter(articles)
                                 recyclerView.adapter = adapter
-                                (adapter as DashboardAdapter).filter.filter("")
+                                (adapter as NewsAdapter).filter.filter("")
 
                             } catch (e: IOException) {
 
@@ -145,7 +117,7 @@ class Dashboard : Drawer() {
         }
     }
 
-    fun retrieveTopics(user: String) {
+    private fun retrieveTopics(user: String) {
 
         val currentUser = db.collection("users")
             .document("$user")

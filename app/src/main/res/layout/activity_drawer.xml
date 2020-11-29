@@ -31,15 +31,27 @@
         android:id="@+id/drawerFrame">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/home"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_marginTop="120dp"
+            android:fontFamily="@font/roboto_medium"
+            android:onClick="homeButtonClicked"
+            android:text="@string/home"
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/storiesNearYou"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_below="@+id/home"
             android:fontFamily="@font/roboto_medium"
             android:onClick="nearYouButtonClicked"
             android:text="Stories Near You"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/topics"

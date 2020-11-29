@@ -15,8 +15,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class DashboardAdapter(var articles: List<NewsArticle>) :
-        RecyclerView.Adapter<DashboardAdapter.ViewHolder>(), Filterable {
+class NewsAdapter(var articles: List<NewsArticle>) :
+        RecyclerView.Adapter<NewsAdapter.ViewHolder>(), Filterable {
 
     var articleFilterList = ArrayList<NewsArticle>()
 

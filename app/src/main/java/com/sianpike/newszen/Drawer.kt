@@ -1,14 +1,17 @@
 package com.sianpike.newszen
 
-import DashboardAdapter
+import NewsAdapter
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuItemCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
@@ -19,6 +22,9 @@ open class Drawer : AppCompatActivity() {
     var drawerLayout: DrawerLayout? = null
     var relativeLayout: RelativeLayout? = null
     lateinit var topics: List<String>
+    var articles = listOf<NewsArticle>()
+
+    var adapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,28 @@ open class Drawer : AppCompatActivity() {
         super.setContentView(drawerLayout)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
+        menuInflater.inflate(R.menu.options_menu, menu)
+
+        val searchItem: MenuItem = menu.findItem(R.id.search)
+        val searchView: SearchView = MenuItemCompat.getActionView(searchItem) as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                (adapter as NewsAdapter).filter.filter(newText)
+                return false
+            }
+
+        })
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == android.R.id.home) {
@@ -52,14 +80,29 @@ open class Drawer : AppCompatActivity() {
                 supportActionBar?.setHomeAsUpIndicator(R.drawable.close)
             }
 
+        } else if (item.itemId == R.id.refresh) {
+
+//            Dashboard().retrieveNews()
+//            adapter!!.notifyDataSetChanged()
+//            var toast = Toast.makeText(applicationContext, "Refreshing...", Toast.LENGTH_SHORT)
+//            toast.show()
+
         }
 
         return true
     }
 
+    fun homeButtonClicked(view: View) {
+
+        val dashboardIntent = Intent(this, Dashboard::class.java)
+        dashboardIntent.putExtra("topics", topics.toTypedArray())
+        startActivity(dashboardIntent)
+    }
+
     fun nearYouButtonClicked(view: View) {
 
         val nearYouIntent = Intent(this, NearYou::class.java)
+        nearYouIntent.putExtra("topics", topics.toTypedArray())
         startActivity(nearYouIntent)
     }
 
