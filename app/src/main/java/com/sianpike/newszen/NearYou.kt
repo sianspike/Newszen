@@ -1,6 +1,5 @@
 package com.sianpike.newszen
 
-import NewsAdapter
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -22,7 +21,7 @@ import java.io.IOException
 import java.util.*
 
 
-class NearYou() : Drawer(), LocationListener {
+class NearYou : Drawer(), LocationListener {
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var recyclerView: RecyclerView

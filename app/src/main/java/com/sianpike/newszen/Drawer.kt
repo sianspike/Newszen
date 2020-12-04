@@ -1,13 +1,11 @@
 package com.sianpike.newszen
 
-import NewsAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
@@ -23,7 +21,6 @@ open class Drawer : AppCompatActivity() {
     var relativeLayout: RelativeLayout? = null
     lateinit var topics: List<String>
     var articles = listOf<NewsArticle>()
-
     var adapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,13 +77,6 @@ open class Drawer : AppCompatActivity() {
                 supportActionBar?.setHomeAsUpIndicator(R.drawable.close)
             }
 
-        } else if (item.itemId == R.id.refresh) {
-
-//            Dashboard().retrieveNews()
-//            adapter!!.notifyDataSetChanged()
-//            var toast = Toast.makeText(applicationContext, "Refreshing...", Toast.LENGTH_SHORT)
-//            toast.show()
-
         }
 
         return true
@@ -115,6 +105,9 @@ open class Drawer : AppCompatActivity() {
 
     fun downloadedButtonClicked(view: View) {
 
+        val downloadedIntent = Intent(this, Downloaded::class.java)
+        downloadedIntent.putExtra("topics", topics.toTypedArray())
+        startActivity(downloadedIntent)
     }
 
     fun notificationsButtonClicked(view: View) {

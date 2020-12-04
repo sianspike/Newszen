@@ -1,14 +1,9 @@
 package com.sianpike.newszen
 
-import NewsAdapter
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.GravityCompat
-import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuItemCompat.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,9 +19,7 @@ class Dashboard : Drawer() {
     private var tag = "Dashboard"
     private val client = OkHttpClient()
     private val db = Firebase.firestore
-
     private var layoutManager: RecyclerView.LayoutManager? = null
-
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {

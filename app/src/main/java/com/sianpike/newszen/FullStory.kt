@@ -1,10 +1,13 @@
 package com.sianpike.newszen
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebView
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import java.io.File
+import java.io.IOException
+
 
 class FullStory : AppCompatActivity() {
 
@@ -12,12 +15,27 @@ class FullStory : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_story)
 
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var url: String = intent.getStringExtra("url").toString()
-        val webView: WebView = findViewById<WebView>(R.id.fullStoryWebsite)
+        var extras = intent.extras
+        var offline = extras?.get("offline") as Boolean
+        val webView: WebView = findViewById(R.id.fullStoryWebsite)
 
-        webView.loadUrl(url)
+        if (offline) {
+
+            var cache = File(cacheDir, "webpagesOffline")
+
+            webView.settings.apply {
+                allowFileAccess = true
+            }
+
+            webView.loadUrl("file:///${cache.absolutePath}")
+
+        } else {
+
+            var url: String = extras?.get("url").toString()
+            webView.loadUrl(url)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
