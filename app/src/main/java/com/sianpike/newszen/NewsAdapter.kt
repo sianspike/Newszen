@@ -29,36 +29,37 @@ import kotlin.collections.ArrayList
 class NewsAdapter(var articles: List<NewsArticle>) :
         RecyclerView.Adapter<NewsAdapter.ViewHolder>(), Filterable {
 
-    var articleFilterList = ArrayList<NewsArticle>()
-    var tag = "Adapter"
-    lateinit var cache: File
-    lateinit var webpageCache: File
-    var jsonList = listOf<String>()
-    var articleObject: String = ""
-    val client = OkHttpClient()
-    var map = mutableMapOf<String, String>()
+    private val tag = "Adapter"
+    private val client = OkHttpClient()
+    private var articleFilterList = ArrayList<NewsArticle>()
+    private lateinit var cache: File
+    private lateinit var webpageCache: File
+    private var jsonList = listOf<String>()
+    private var articleObject: String = ""
+    private var map = mutableMapOf<String, String>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var itemImage: ImageView = itemView.findViewById(R.id.imageView)
-        var itemTitle: TextView = itemView.findViewById(R.id.titleText)
-        var itemPublisher: TextView = itemView.findViewById(R.id.publisherText)
-        var itemSummary: TextView = itemView.findViewById(R.id.summaryText)
-        var download: Button = itemView.findViewById(R.id.downloadButton)
+        val itemImage: ImageView = itemView.findViewById(R.id.imageView)
+        val itemTitle: TextView = itemView.findViewById(R.id.titleText)
+        val itemPublisher: TextView = itemView.findViewById(R.id.publisherText)
+        val itemSummary: TextView = itemView.findViewById(R.id.summaryText)
+        val download: Button = itemView.findViewById(R.id.downloadButton)
 
         init {
 
+            val gson = Gson()
             cache = File(itemView.context.cacheDir, "downloadedStories")
             webpageCache = File(itemView.context.cacheDir, "webpagesOffline")
             articleFilterList = articles as ArrayList<NewsArticle>
-            val gson = Gson()
 
             if (cache.exists()) {
 
                 try {
 
                     val listNewsArticleType = object : TypeToken<List<NewsArticle>>() {}.type
-                    var article: ArrayList<NewsArticle> = gson.fromJson(cache.readText(), listNewsArticleType)
+                    val article: ArrayList<NewsArticle> = gson.fromJson(cache.readText(), listNewsArticleType)
+
                     for (item in article) {
 
                         jsonList += gson.toJson(item)
@@ -66,7 +67,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
                 } catch (e: JsonSyntaxException) {
 
-                    var article: NewsArticle = gson.fromJson(cache!!.readText(), NewsArticle::class.java)
+                    val article: NewsArticle = gson.fromJson(cache!!.readText(), NewsArticle::class.java)
 
                     jsonList += gson.toJson(article)
                 }
@@ -74,7 +75,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
             itemView.setOnClickListener { v: View  ->
 
-                var currentPosition: Int = adapterPosition
+                val currentPosition: Int = adapterPosition
                 val expandStory = Intent(v.context, FullStory::class.java)
                 var offline: Boolean = false
 
@@ -85,8 +86,6 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
                 expandStory.putExtra("title", articleFilterList[currentPosition].title)
                 expandStory.putExtra("publisher", articleFilterList[currentPosition].author)
-                expandStory.putExtra("content", articleFilterList[currentPosition].content)
-                expandStory.putExtra("image", articleFilterList[currentPosition].urlToImage)
                 expandStory.putExtra("url", articleFilterList[currentPosition].url)
                 expandStory.putExtra("offline", offline)
                 v.context.startActivity(expandStory)
@@ -96,17 +95,19 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
                 //cache.delete()
                 //webpageCache.delete()
-                var currentPosition: Int = adapterPosition
-                var source = Source(articleFilterList[currentPosition].source.id.toString(),
+                Log.i(tag, "Download Button clicked!")
+
+                val currentPosition: Int = adapterPosition
+                val source = Source(articleFilterList[currentPosition].source.id.toString(),
                         articles[currentPosition].source.name.toString())
-                var author = articleFilterList[currentPosition].author.toString()
-                var title = articleFilterList[currentPosition].title.toString()
-                var description = articleFilterList[currentPosition].description.toString()
-                var url = articleFilterList[currentPosition].url.toString()
-                var urlToImage = articleFilterList[currentPosition].urlToImage.toString()
-                var publishedAt = articleFilterList[currentPosition].publishedAt.toString()
-                var content = articleFilterList[currentPosition].content.toString()
-                var article = NewsArticle(source!!, author, title, description, url, urlToImage, publishedAt, content)
+                val author = articleFilterList[currentPosition].author.toString()
+                val title = articleFilterList[currentPosition].title.toString()
+                val description = articleFilterList[currentPosition].description.toString()
+                val url = articleFilterList[currentPosition].url.toString()
+                val urlToImage = articleFilterList[currentPosition].urlToImage.toString()
+                val publishedAt = articleFilterList[currentPosition].publishedAt.toString()
+                val content = articleFilterList[currentPosition].content.toString()
+                val article = NewsArticle(source!!, author, title, description, url, urlToImage, publishedAt, content)
                 val request = Request.Builder()
                         .url(url)
                         .build()
@@ -127,21 +128,23 @@ class NewsAdapter(var articles: List<NewsArticle>) :
                                 throw IOException("Unexpected code $response")
                             }
 
-                            var stream = response.body?.byteStream()
+                            val stream = response.body?.byteStream()
+
                             if (stream != null) {
+
                                 map["$author$title"] = stream.reader().readText()
                             }
 
-                            var convertedToJson = gson.toJson(map)
+                            val convertedToJson = gson.toJson(map)
+
                             webpageCache.writeText(convertedToJson)
                         }
                     }
                 })
 
-                var gson = Gson()
-                articleObject = gson.toJson(article)
+                val gson = Gson()
 
-                Log.i(tag, "Download Button clicked!")
+                articleObject = gson.toJson(article)
 
                 if (jsonList.contains(articleObject)) {
 
@@ -152,6 +155,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
                         if (item == articleObject) {
 
                             jsonList -= articleObject
+
                             articleFilterList.remove(article)
                             map.remove("$author$title")
                             notifyItemRemoved(currentPosition)
@@ -173,6 +177,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
         val v = LayoutInflater.from(parent.context)
                 .inflate(R.layout.news_card, parent, false)
+
         return ViewHolder(v)
     }
 
@@ -185,10 +190,10 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
         for (item in jsonList) {
 
-            var gson = Gson()
-            var temp = gson.fromJson(item, NewsArticle::class.java)
+            val gson = Gson()
+            val tempItem = gson.fromJson(item, NewsArticle::class.java)
 
-            if (articleFilterList.contains(temp)) {
+            if (articleFilterList.contains(tempItem)) {
 
                 holder.download.text = holder.itemView.context.getString(R.string.downloaded)
             }
@@ -231,6 +236,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
                 val filterResults = FilterResults()
                 filterResults.values = articleFilterList
+
                 return filterResults
             }
 
@@ -238,6 +244,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
 
                 articleFilterList = results?.values as ArrayList<NewsArticle>
+
                 notifyDataSetChanged()
             }
         }

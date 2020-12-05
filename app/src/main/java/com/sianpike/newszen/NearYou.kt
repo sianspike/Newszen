@@ -23,12 +23,13 @@ import java.util.*
 
 class NearYou : Drawer(), LocationListener {
 
+    private val recordRequestCode = 101
+    private val client = OkHttpClient()
+    private val tag = "Near You"
+    private val newsRetriever = NewsRetriever()
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var recyclerView: RecyclerView
-    private var tag = "Near You"
-    private val client = OkHttpClient()
     private var currentLocation: Location? = null
-    private val RECORD_REQUEST_CODE = 101
     private var locationManager: LocationManager? = null
     private var country: String? = ""
 
@@ -63,7 +64,8 @@ class NearYou : Drawer(), LocationListener {
                 }
 
             country = getLocation()
-            retrieveNews(country)
+
+            newsRetriever.retrieveNews(topics, this@NearYou, adapter as NewsAdapter, country)
 
         } else {
 
@@ -74,7 +76,7 @@ class NearYou : Drawer(), LocationListener {
     private fun getLocation(): String {
 
         val gcd = Geocoder(this, Locale.getDefault())
-        var addresses = gcd.getFromLocation(
+        val addresses = gcd.getFromLocation(
             currentLocation!!.latitude,
             currentLocation!!.latitude,
             1
@@ -83,18 +85,19 @@ class NearYou : Drawer(), LocationListener {
         return addresses[0].countryCode
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>, grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+
         when (requestCode) {
-            RECORD_REQUEST_CODE -> {
+
+            recordRequestCode -> {
 
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 
                     Log.i(tag, "Permission has been denied by user")
 
                 } else {
+
                     Log.i(tag, "Permission has been granted by user")
                 }
             }
@@ -105,12 +108,11 @@ class NearYou : Drawer(), LocationListener {
 
         Log.i(tag, "Permission to access location denied")
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
 
             val builder = AlertDialog.Builder(this)
+
             builder.setMessage("Permission to access location is required for this app to show news stories relevant to your location.")
                 .setTitle("Permission required")
 
@@ -121,6 +123,7 @@ class NearYou : Drawer(), LocationListener {
             }
 
             val dialog = builder.create()
+
             dialog.show()
 
         } else {
@@ -130,10 +133,11 @@ class NearYou : Drawer(), LocationListener {
     }
 
     private fun makeRequest() {
+
         ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            RECORD_REQUEST_CODE
+            recordRequestCode
         )
     }
 
@@ -149,75 +153,26 @@ class NearYou : Drawer(), LocationListener {
 
         if (item.itemId == R.id.refresh) {
 
-            retrieveNews(country)
-            adapter!!.notifyDataSetChanged()
-            var toast = Toast.makeText(applicationContext, "Refreshing...", Toast.LENGTH_SHORT)
-            toast.show()
+            val toast = Toast.makeText(applicationContext, "Refreshing...", Toast.LENGTH_SHORT)
 
+            toast.show()
+            newsRetriever.retrieveNews(topics, this@NearYou, adapter as NewsAdapter, country)
+            adapter?.notifyDataSetChanged()
         }
 
         return true
     }
 
-    private fun retrieveNews(country: String?) {
-
-        for (topic in topics) {
-
-            val request = Request.Builder()
-                .url("https://newsapi.org/v2/top-headlines?country=$country&category=$topic")
-                .addHeader("x-api-key", "9952d1b8355247aba2d7dc3d260baec0")
-                .build()
-
-            client.newCall(request).enqueue(object : Callback {
-
-                override fun onFailure(call: Call, e: IOException) {
-
-                    e.printStackTrace()
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-
-                    response.use {
-
-                        if (!response.isSuccessful) {
-
-                            throw IOException("Unexpected code $response")
-                        }
-
-                        val result = Klaxon().parse<APIResult>(response.body!!.string())
-                        articles += result!!.articles
-
-                        // Run view-related code back on the main thread
-                        this@NearYou.runOnUiThread {
-
-                            try {
-
-                                recyclerView.layoutManager = layoutManager
-
-                                adapter = NewsAdapter(articles)
-                                recyclerView.adapter = adapter
-                                (adapter as NewsAdapter).filter.filter("")
-
-                            } catch (e: IOException) {
-
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-                }
-            })
-        }
-    }
-
     override fun onLocationChanged(location: Location) {
+
         try {
 
             val latitude: Double = location.latitude
             val longitude: Double = location.longitude
+
             Log.i("OK", "and$longitude$latitude")
 
         } catch (e: NullPointerException) {
-
 
         }
     }

@@ -13,8 +13,8 @@ import com.google.firebase.ktx.Firebase
 
 class Topics : AppCompatActivity() {
 
-    val db = Firebase.firestore
-    var userUID = "Error"
+    private val db = Firebase.firestore
+    private val tag = "Topics"
     private lateinit var businessButton: Button
     private lateinit var entertainmentButton: Button
     private lateinit var generalButton: Button
@@ -23,37 +23,35 @@ class Topics : AppCompatActivity() {
     private lateinit var sportsButton: Button
     private lateinit var technologyButton: Button
     private var topics = arrayOf<String>()
-    private val tag = "Topics"
     private lateinit var buttons: Array<Button>
+    private var userUID = "Error"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
 
-        if (intent.getStringExtra("userUID") != null) {
+        userUID = if (intent.getStringExtra("userUID") != null) {
 
-            userUID = intent.getStringExtra("userUID").toString()
+            intent.getStringExtra("userUID").toString()
 
         } else {
 
-            userUID = FirebaseAuth.getInstance().currentUser?.uid!!
+            FirebaseAuth.getInstance().currentUser?.uid!!
         }
 
         if (intent.getStringArrayExtra("topics") != null) {
 
             topics = (intent.getStringArrayExtra("topics") as Array<String>)
-
         }
 
-        businessButton = findViewById<Button>(R.id.businessButton)
-        entertainmentButton = findViewById<Button>(R.id.entertainmentButton)
-        generalButton = findViewById<Button>(R.id.generalButton)
-        healthButton = findViewById<Button>(R.id.healthButton)
-        scienceButton = findViewById<Button>(R.id.scienceButton)
-        sportsButton = findViewById<Button>(R.id.sportsButton)
-        technologyButton = findViewById<Button>(R.id.technologyButton)
-
-        buttons = arrayOf<Button>(businessButton, entertainmentButton, generalButton,
+        businessButton = findViewById(R.id.businessButton)
+        entertainmentButton = findViewById(R.id.entertainmentButton)
+        generalButton = findViewById(R.id.generalButton)
+        healthButton = findViewById(R.id.healthButton)
+        scienceButton = findViewById(R.id.scienceButton)
+        sportsButton = findViewById(R.id.sportsButton)
+        technologyButton = findViewById(R.id.technologyButton)
+        buttons = arrayOf(businessButton, entertainmentButton, generalButton,
                 healthButton, scienceButton, sportsButton, technologyButton)
 
         for (button in buttons) {
@@ -67,11 +65,9 @@ class Topics : AppCompatActivity() {
 
     private fun saveTopics(newTopics: Array<String>) {
 
-        val data = hashMapOf(
-            "topics" to newTopics.toList()
-        )
+        val data = hashMapOf("topics" to newTopics.toList())
 
-        db.collection("users").document(userUID!!).set(data, SetOptions.merge())
+        db.collection("users").document(userUID).set(data, SetOptions.merge())
             .addOnSuccessListener {
 
                 Log.d(tag, "Document snapshot successfully written!")
@@ -85,8 +81,8 @@ class Topics : AppCompatActivity() {
     private fun appendArray(array: Array<String>, element: String): Array<String> {
 
         val list: MutableList<String> = array.toMutableList()
-        list.add(element)
 
+        list.add(element)
         return list.toTypedArray()
     }
 
@@ -105,6 +101,7 @@ class Topics : AppCompatActivity() {
         saveTopics(newTopics)
 
         val dashboard = Intent(this, Dashboard::class.java)
+
         dashboard.putExtra("topics", newTopics)
         startActivity(dashboard)
     }

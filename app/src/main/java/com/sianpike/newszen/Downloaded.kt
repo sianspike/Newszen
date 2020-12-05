@@ -2,8 +2,6 @@ package com.sianpike.newszen
 
 import android.os.Bundle
 import android.view.Menu
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.GsonBuilder
@@ -39,6 +37,7 @@ class Downloaded : Drawer(){
         super.onCreateOptionsMenu(menu)
 
         val refreshIcon = menu.findItem(R.id.refresh)
+
         menu.removeItem(refreshIcon.itemId)
 
         return true
@@ -47,24 +46,26 @@ class Downloaded : Drawer(){
     private fun getCache() {
 
         val gsonBuilder = GsonBuilder()
+        val cache = File(applicationContext.cacheDir, "downloadedStories")
+
         gsonBuilder.setLenient()
-        var cache = File(applicationContext.cacheDir, "downloadedStories")
 
         if (cache.exists()) {
-            println(cache.readText())
-            var gson = gsonBuilder.create()
+
+            val gson = gsonBuilder.create()
 
             articles = try {
 
                 val listNewsArticleType = object : TypeToken<List<NewsArticle>>() {}.type
-                var article: ArrayList<NewsArticle> = gson.fromJson(cache!!.readText(), listNewsArticleType)
+                val article: ArrayList<NewsArticle> = gson.fromJson(cache!!.readText(), listNewsArticleType)
                 article
 
             } catch (e: JsonSyntaxException) {
 
-                var article: NewsArticle = gson.fromJson(cache!!.readText(), NewsArticle::class.java)
+                val article: NewsArticle = gson.fromJson(cache!!.readText(), NewsArticle::class.java)
                 arrayListOf(article)
             }
+
         } else {
 
             //add text
@@ -76,6 +77,7 @@ class Downloaded : Drawer(){
         recyclerView.layoutManager = layoutManager
         adapter = NewsAdapter(articles)
         recyclerView.adapter = adapter
+
         (adapter as NewsAdapter).filter.filter("")
     }
 }

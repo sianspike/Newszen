@@ -36,6 +36,7 @@ open class Drawer : AppCompatActivity() {
 
         drawerLayout = layoutInflater.inflate(R.layout.activity_drawer, null) as DrawerLayout?
         relativeLayout = drawerLayout!!.findViewById(R.id.drawerFrame) as RelativeLayout
+
         layoutInflater.inflate(layoutResID, relativeLayout, true)
         super.setContentView(drawerLayout)
     }
@@ -48,15 +49,17 @@ open class Drawer : AppCompatActivity() {
         val searchView: SearchView = MenuItemCompat.getActionView(searchItem) as SearchView
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextSubmit(query: String?): Boolean {
+
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+
                 (adapter as NewsAdapter).filter.filter(newText)
                 return false
             }
-
         })
 
         return super.onCreateOptionsMenu(menu)
@@ -76,7 +79,6 @@ open class Drawer : AppCompatActivity() {
                 drawerLayout?.openDrawer(GravityCompat.START)
                 supportActionBar?.setHomeAsUpIndicator(R.drawable.close)
             }
-
         }
 
         return true
@@ -85,6 +87,7 @@ open class Drawer : AppCompatActivity() {
     fun homeButtonClicked(view: View) {
 
         val dashboardIntent = Intent(this, Dashboard::class.java)
+
         dashboardIntent.putExtra("topics", topics.toTypedArray())
         startActivity(dashboardIntent)
     }
@@ -92,6 +95,7 @@ open class Drawer : AppCompatActivity() {
     fun nearYouButtonClicked(view: View) {
 
         val nearYouIntent = Intent(this, NearYou::class.java)
+
         nearYouIntent.putExtra("topics", topics.toTypedArray())
         startActivity(nearYouIntent)
     }
@@ -99,6 +103,7 @@ open class Drawer : AppCompatActivity() {
     fun topicsButtonClicked(view: View) {
 
         val topicsIntent = Intent(this, Topics::class.java)
+
         topicsIntent.putExtra("topics", topics.toTypedArray())
         startActivity(topicsIntent)
     }
@@ -106,6 +111,7 @@ open class Drawer : AppCompatActivity() {
     fun downloadedButtonClicked(view: View) {
 
         val downloadedIntent = Intent(this, Downloaded::class.java)
+
         downloadedIntent.putExtra("topics", topics.toTypedArray())
         startActivity(downloadedIntent)
     }
@@ -117,7 +123,9 @@ open class Drawer : AppCompatActivity() {
     fun logoutButtonClicked(view: View) {
 
         Firebase.auth.signOut()
+
         val login = Intent(this, Login::class.java)
+
         startActivity(login)
         finish()
     }
