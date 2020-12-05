@@ -36,6 +36,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
     var jsonList = listOf<String>()
     var articleObject: String = ""
     val client = OkHttpClient()
+    var map = mutableMapOf<String, String>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -48,8 +49,9 @@ class NewsAdapter(var articles: List<NewsArticle>) :
         init {
 
             cache = File(itemView.context.cacheDir, "downloadedStories")
+            webpageCache = File(itemView.context.cacheDir, "webpagesOffline")
             articleFilterList = articles as ArrayList<NewsArticle>
-            var gson = Gson()
+            val gson = Gson()
 
             if (cache.exists()) {
 
@@ -87,7 +89,6 @@ class NewsAdapter(var articles: List<NewsArticle>) :
                 expandStory.putExtra("image", articleFilterList[currentPosition].urlToImage)
                 expandStory.putExtra("url", articleFilterList[currentPosition].url)
                 expandStory.putExtra("offline", offline)
-                expandStory.putExtra("webpageFile", articleFilterList[currentPosition].savedWebpage)
                 v.context.startActivity(expandStory)
             }
 
@@ -109,9 +110,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
                 val request = Request.Builder()
                         .url(url)
                         .build()
-                webpageCache = File(itemView.context.cacheDir, "webpagesOffline")
 
-                //create dictionary to point to correct html in cache
                 client.newCall(request).enqueue(object : Callback {
 
                     override fun onFailure(call: Call, e: IOException) {
@@ -130,8 +129,11 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
                             var stream = response.body?.byteStream()
                             if (stream != null) {
-                                webpageCache.writeText(stream.reader().readText())
+                                map["$author$title"] = stream.reader().readText()
                             }
+
+                            var convertedToJson = gson.toJson(map)
+                            webpageCache.writeText(convertedToJson)
                         }
                     }
                 })
@@ -151,6 +153,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
 
                             jsonList -= articleObject
                             articleFilterList.remove(article)
+                            map.remove("$author$title")
                             notifyItemRemoved(currentPosition)
                         }
                     }
