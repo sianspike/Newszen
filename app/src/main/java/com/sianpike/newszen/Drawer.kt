@@ -36,12 +36,12 @@ open class Drawer : AppCompatActivity() {
      * Set up navigation drawer
      */
     override fun setContentView(layoutResID: Int) {
-        super.setContentView(drawerLayout)
 
         drawerLayout = layoutInflater.inflate(R.layout.activity_drawer, null) as DrawerLayout?
         relativeLayout = drawerLayout!!.findViewById(R.id.drawerFrame) as RelativeLayout
 
         layoutInflater.inflate(layoutResID, relativeLayout, true)
+        super.setContentView(drawerLayout)
     }
 
     /**
