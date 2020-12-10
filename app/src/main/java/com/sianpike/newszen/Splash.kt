@@ -8,6 +8,9 @@ import java.io.File
 import java.util.*
 import kotlin.concurrent.schedule
 
+/**
+ * Show splash screen and set up cache locations.
+ */
 class Splash : AppCompatActivity() {
 
     private val waitingTime: Long = 3000
@@ -18,6 +21,7 @@ class Splash : AppCompatActivity() {
 
         File.createTempFile("downloadedStories", null, applicationContext.cacheDir)
         File.createTempFile("webpagesOffline", null, applicationContext.cacheDir)
+        File.createTempFile("articles", null, applicationContext.cacheDir)
 
         val login = Intent(this, Login::class.java)
 

@@ -20,7 +20,7 @@ open class Drawer : AppCompatActivity() {
     var drawerLayout: DrawerLayout? = null
     var relativeLayout: RelativeLayout? = null
     lateinit var topics: List<String>
-    var articles = listOf<NewsArticle>()
+    var articles: List<NewsArticle> = emptyList()
     var adapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,15 +32,21 @@ open class Drawer : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Set up navigation drawer
+     */
     override fun setContentView(layoutResID: Int) {
+        super.setContentView(drawerLayout)
 
         drawerLayout = layoutInflater.inflate(R.layout.activity_drawer, null) as DrawerLayout?
         relativeLayout = drawerLayout!!.findViewById(R.id.drawerFrame) as RelativeLayout
 
         layoutInflater.inflate(layoutResID, relativeLayout, true)
-        super.setContentView(drawerLayout)
     }
 
+    /**
+     * Set up search bar in action bar.
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         menuInflater.inflate(R.menu.options_menu, menu)
@@ -65,6 +71,9 @@ open class Drawer : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Assign tasks to each item in action bar.
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == android.R.id.home) {
@@ -118,6 +127,10 @@ open class Drawer : AppCompatActivity() {
 
     fun notificationsButtonClicked(view: View) {
 
+        val notificationsIntent = Intent(this, NotificationSettings::class.java)
+
+        notificationsIntent.putExtra("topics", topics.toTypedArray())
+        startActivity(notificationsIntent)
     }
 
     fun logoutButtonClicked(view: View) {

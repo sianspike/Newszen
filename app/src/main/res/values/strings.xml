@@ -34,6 +34,15 @@
     <string name="download">Download</string>
     <string name="home">Home</string>
     <string name="downloaded">Downloaded</string>
+    <string name="receive_notifications_for">Receive notifications for:</string>
+    <string name="notification_body">\"New stories available!</string>
+    <string name="save">Save</string>
+    <string name="stories_near_you">Stories Near You</string>
+    <string name="topics">Topics</string>
+    <string name="downloaded">Downloaded</string>
+    <string name="notification_settings">Notification Settings</string>
+    <string name="logout">Logout</string>
+    <string name="newszen">Newszen</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.

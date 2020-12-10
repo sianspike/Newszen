@@ -2,13 +2,21 @@ package com.sianpike.newszen
 
 import android.app.Activity
 import com.beust.klaxon.Klaxon
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.*
 import okio.IOException
+import java.util.concurrent.CountDownLatch
 
 class NewsRetriever {
 
     private val client = OkHttpClient()
 
+    /**
+     * Retrieve news articles based on topics and (optionally) country.
+     */
     fun retrieveNews(topics: List<String>, activity: Activity, adapter: NewsAdapter, country: String?) {
 
         var countryUrl = ""
@@ -61,5 +69,36 @@ class NewsRetriever {
                 }
             })
         }
+    }
+
+    /**
+     * Retrieve news synchronously.
+     */
+    suspend fun retrieveNewsNotAsync(topics: List<String>): Array<NewsArticle> {
+
+        var newArticles = emptyList<NewsArticle>()
+
+        for (topic in topics) {
+
+            val request = Request.Builder()
+                    .url("https://newsapi.org/v2/top-headlines?category=$topic")
+                    .addHeader("x-api-key", "9952d1b8355247aba2d7dc3d260baec0")
+                    .build()
+
+            withContext(Dispatchers.IO) {
+                client.newCall(request).execute().use { response ->
+
+                    if (!response.isSuccessful) {
+
+                        throw java.io.IOException("Unexpected code $response")
+                    }
+
+                    var result = Klaxon().parse<APIResult>(response.body!!.string())
+                    newArticles += result!!.articles
+                }
+            }
+        }
+
+        return newArticles.toTypedArray()
     }
 }

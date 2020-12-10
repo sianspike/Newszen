@@ -25,7 +25,9 @@ import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+/**
+ * Recyler view adapter.
+ */
 class NewsAdapter(var articles: List<NewsArticle>) :
         RecyclerView.Adapter<NewsAdapter.ViewHolder>(), Filterable {
 
@@ -53,6 +55,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
             webpageCache = File(itemView.context.cacheDir, "webpagesOffline")
             articleFilterList = articles as ArrayList<NewsArticle>
 
+            //Retrieve downloaded news stories from cache.
             if (cache.exists()) {
 
                 try {
@@ -73,6 +76,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
                 }
             }
 
+            //When story is clicked, open full story.
             itemView.setOnClickListener { v: View  ->
 
                 val currentPosition: Int = adapterPosition
@@ -91,6 +95,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
                 v.context.startActivity(expandStory)
             }
 
+            //When download is clicked, download story to cache.
             download.setOnClickListener { v: View ->
 
                 //cache.delete()
@@ -205,6 +210,7 @@ class NewsAdapter(var articles: List<NewsArticle>) :
         return articleFilterList.size
     }
 
+    //Filter stories from search bar.
     override fun getFilter(): Filter {
 
         return object : Filter() {

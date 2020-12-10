@@ -24,7 +24,6 @@ import java.util.*
 class NearYou : Drawer(), LocationListener {
 
     private val recordRequestCode = 101
-    private val client = OkHttpClient()
     private val tag = "Near You"
     private val newsRetriever = NewsRetriever()
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -33,6 +32,10 @@ class NearYou : Drawer(), LocationListener {
     private var locationManager: LocationManager? = null
     private var country: String? = ""
 
+    /**
+     * Set up recycler view.
+     * Check user has given permission to access location.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_near_you)
@@ -73,6 +76,9 @@ class NearYou : Drawer(), LocationListener {
         }
     }
 
+    /**
+     * Retrieve current stored location.
+     */
     private fun getLocation(): String {
 
         val gcd = Geocoder(this, Locale.getDefault())
@@ -104,6 +110,9 @@ class NearYou : Drawer(), LocationListener {
         }
     }
 
+    /**
+     * Show dialog box to accept permissions if they have not yet been granted.
+     */
     private fun setupPermissions() {
 
         Log.i(tag, "Permission to access location denied")

@@ -18,16 +18,17 @@ class Downloaded : Drawer(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_downloaded)
 
-        if (intent.getStringArrayExtra("topics") != null) {
-
-            topics = (intent.getStringArrayExtra("topics") as Array<String>).toList()
-        }
-
+        //Initialise recycler view
         recyclerView = findViewById(R.id.recyclerView)
         layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         adapter = NewsAdapter(articles)
         recyclerView.adapter = adapter
+
+        if (intent.getStringArrayExtra("topics") != null) {
+
+            topics = (intent.getStringArrayExtra("topics") as Array<String>).toList()
+        }
 
         getCache()
         display()
@@ -43,6 +44,9 @@ class Downloaded : Drawer(){
         return true
     }
 
+    /**
+     * Retrieve downloaded news articles from cache.
+     */
     private fun getCache() {
 
         val gsonBuilder = GsonBuilder()
@@ -66,12 +70,12 @@ class Downloaded : Drawer(){
                 arrayListOf(article)
             }
 
-        } else {
-
-            //add text
         }
     }
 
+    /**
+     * Refresh recycler view with downloaded news stories.
+     */
     private fun display() {
 
         recyclerView.layoutManager = layoutManager

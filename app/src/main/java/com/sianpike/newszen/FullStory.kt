@@ -9,6 +9,10 @@ import java.io.File
 
 class FullStory : AppCompatActivity() {
 
+    /**
+     * If app is online, render website with url.
+     * If app is offline, get html and render text only view with cache.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_story)

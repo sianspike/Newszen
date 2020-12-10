@@ -11,6 +11,9 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+/**
+ * Allow user to choose topics.
+ */
 class Topics : AppCompatActivity() {
 
     private val db = Firebase.firestore
